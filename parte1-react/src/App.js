@@ -1,18 +1,12 @@
-import './App.css';
-// así lo obtenemos
-import Mensaje from './Mensaje.js'
-const Description = () => { 
-  return <p> Esta es la App del curso</p>
-}
-const App = () => {
-  return(
+import './styles.css';
+
+const defaulf = function App() {
+return (
     <div className="App">
-      <Mensaje color='red' message='Estmos trabajando' />
-      <Mensaje color='green' message='en un curso' />
-      <Mensaje color='pink' message='de ReactJS' />
-      <Description />
-    </div>
-  )
+    <h1>Hello CodeSandbox</h1>
+    <h2>Start editing to see some magic happend!</h2>
+  </div>
+  );
 }
 
 export default App;
