@@ -3,25 +3,35 @@ import { useState } from 'react'
 
 const rootElement = document.getElementById("root")
 
+//Este componente recibe por props number que almacena el estado
+//Para que se vuelva a renderizar
+const Counter = ({ number }) => {
+  console.log('Console Render');
+  return <h1>{number}</h1>
+}
+
 const App = (props) => {
-  const [contadorValue, updateContador] = useState(1)
+  const [contador, setContador] = useState(0)
 
   console.log("render");
 
   const handleClick = () => {
-    {updateContador(contadorValue+1)}
+    // {updateContador(contadorValue+1)}
+    setContador((prevContador) => {
+      return prevContador + 1
+    })
   }
   const handleClickReset = () => {
-    updateContador(0)
+    setContador(0)
   }
 
-  const isEven = contadorValue % 2 === 0
+  const isEven = contador % 2 === 0
 
   return (
   <div>
     <p>El valor del contador es:</p>
-    <h1>{contadorValue}</h1>
-    {/* condicional ternario */}
+    {/* pasamos el estado como props al componente */}
+    <Counter number={contador} />
     <p>{isEven ? 'Es par' : 'Es impar'}</p>
     <button onClick={handleClick}>Incrementar</button>
     <button onClick={handleClickReset}>Reset</button>
