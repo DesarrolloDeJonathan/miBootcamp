@@ -1,42 +1,44 @@
 import ReactDOM from 'react-dom'
 import { useState } from 'react'
+import "./styles.css"
 
 const rootElement = document.getElementById("root")
 
-//Este componente recibe por props number que almacena el estado
-//Para que se vuelva a renderizar
-const Counter = ({ number }) => {
-  console.log('Console Render');
-  return <h1>{number}</h1>
-}
-
 const App = (props) => {
-  const [contador, setContador] = useState(0)
+  //De esta forma expresamos los estados separados entendiblemente
+  // const [left, setLeft] = useState(0)
+  // const [right, setRight] = useState(0)
 
-  console.log("render");
+  const [counters, setCounters] = useState({
+    left: 0,
+    right:0
+  })
 
-  const handleClick = () => {
-    // {updateContador(contadorValue+1)}
-    setContador((prevContador) => {
-      return prevContador + 1
+  const handleClickLeft = () => {
+    setCounters({
+      left: counters.left + 1,
+      right: counters.right
     })
   }
-  const handleClickReset = () => {
-    setContador(0)
+
+  const handleClickRight = () => {
+    setCounters({
+      left: counters.left,
+      right: counters.right + 1
+    })
   }
 
-  const isEven = contador % 2 === 0
-
-  return (
-  <div>
-    <p>El valor del contador es:</p>
-    {/* pasamos el estado como props al componente */}
-    <Counter number={contador} />
-    <p>{isEven ? 'Es par' : 'Es impar'}</p>
-    <button onClick={handleClick}>Incrementar</button>
-    <button onClick={handleClickReset}>Reset</button>
-  </div>
-  )
+   return (
+      //Con los estados separados
+      // <div>
+      //   {left}<button onClick={() => setLeft(left + 1)}>left</button>
+      //   <button onClick={() => setRight(right + 1)}>right</button>{right}
+      // </div>
+      <div>
+        {counters.left}<button onClick={handleClickLeft}>left</button><br />
+        <button onClick={handleClickRight}>right</button>{counters.right}
+      </div>
+    )
 }
 
 ReactDOM.render(
