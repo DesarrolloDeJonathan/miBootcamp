@@ -18,16 +18,20 @@ const App = (props) => {
 
   const handleClickLeft = () => {
     const newCountersState = {
+      // Esto guarda todas la propiedades del objeto
+      ...counters,
       left: counters.left + 1,
-      right: counters.right,
-      clicks: counters.clicks +1
+      // right: counters.right, Este no sera necesario recuperarlo, la queremos igual
+      clicks: counters.clicks +1 //Forma correcta de actualizar el estado
     }
+      counters.left++ //De esta forma no se actualiza el estado se estaria mutando
     setCounters(newCountersState)
   }
 
   const handleClickRight = () => {
     setCounters({
-      left: counters.left,
+      ...counters,
+      // left: counters.left, Este no sera necesario recuperarlo, la queremos igual
       right: counters.right + 1,
       clicks: counters.clicks +1
     })
