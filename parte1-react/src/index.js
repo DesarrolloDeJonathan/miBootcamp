@@ -14,12 +14,14 @@ const ListOfClicks = ({clicks}) => {
   return <p>{clicks.join(', ')}</p>
 }
 
-const App = (props) => {
-  const [counters, setCounters] = useState({
-    left: 0,
-    right:0,
-    mensaje: 'Mensaje en el estado'
-  });
+const INITIAL_COUNTER_STATE = {
+  left: 0,
+  right:0,
+  mensaje: 'Mensaje en el estado'
+}
+
+const App = () => {
+  const [counters, setCounters] = useState(INITIAL_COUNTER_STATE);
 
   const [clicks, setClicks] = useState ([])
 
@@ -46,11 +48,7 @@ const App = (props) => {
 
   // una de las formas es pasando los valores originales para volver a ese estado
   const handleReset = () => {
-    setCounters({
-      left: 0,
-      right:0,
-      mensaje: 'Mensaje en el estado'
-    });
+    setCounters(INITIAL_COUNTER_STATE);
     setClicks([])
   }
 
