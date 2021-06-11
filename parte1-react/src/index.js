@@ -4,12 +4,18 @@ import "./styles.css"
 
 const rootElement = document.getElementById("root");
 
-const App = (props) => {
+// Delarando componentes para renderizado condicional
+const WarningNotUsed = () => {
+  return <h1>Todavia no se ha usado el contador</h1>
+}
+const ListOfClicks = ({clicks}) => {
+  return <p>{clicks.join(', ')}</p>
+}
 
+const App = (props) => {
   const [counters, setCounters] = useState({
     left: 0,
     right:0,
-    // clicks: 0 //Esta propiedad ya la estamos opteniendo de click.length
     mensaje: 'Mensaje en el estado'
   });
 
@@ -18,8 +24,6 @@ const App = (props) => {
     const newCountersState = {
       ...counters,
       left: counters.left + 1
-      // Eliminamos, lo podemos obtener del estado con la propiedad click.length
-      // clicks: counters.clicks +1
     };
     //Sin el Spread Operator
     setCounters(newCountersState);
@@ -32,7 +36,6 @@ const App = (props) => {
     setCounters({
       ...counters,
       right: counters.right + 1
-      // clicks: counters.clicks +1
     });
     //Con el Spread Operator
     setClicks(prevClicks => ([...prevClicks, ['R']]))
@@ -46,7 +49,8 @@ const App = (props) => {
         {counters.right}
         <p>Total clicks: {clicks.length}</p>
         <p>{counters.mensaje}</p>
-        <p>{clicks.join(', ')}</p>
+        {/* Aplicando renderizado condicional */}
+        {clicks.length === 0 ? (<WarningNotUsed />) : (<ListOfClicks clicks={clicks}/>)}
       </div>
     )
 }
