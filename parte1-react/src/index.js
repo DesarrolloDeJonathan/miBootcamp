@@ -23,11 +23,7 @@ const App = (props) => {
 
   const [clicks, setClicks] = useState ([])
 
-  const handleClickLeft = (event) => {
-    //Atrapadndo el evento veremos info como:
-    //Elmentos recividos, teimpo que tardo en hacerlo...
-    console.log(event);
-    // event.preventDefault() // sera importante para los formularios
+  const handleClickLeft = () => {
     const newCountersState = {
       ...counters,
       left: counters.left + 1
@@ -48,16 +44,28 @@ const App = (props) => {
     setClicks(prevClicks => ([...prevClicks, ['R']]))
   }
 
+  // una de las formas es pasando los valores originales para volver a ese estado
+  const handleReset = () => {
+    setCounters({
+      left: 0,
+      right:0,
+      mensaje: 'Mensaje en el estado'
+    });
+    setClicks([])
+  }
+
    return (
       <div>
         {counters.left}
-        <a href="#" onClick={handleClickLeft}>left</a> {/**Evitar usar el anchor, no es buena practica */}
+        <button onClick={handleClickLeft}>left</button>
         <button onClick={handleClickRight}>right</button>
         {counters.right}
+        <p>
+          <button onClick={handleReset}>Reset</button>
+        </p>
         <p>Total clicks: {clicks.length}</p>
         <p>{counters.mensaje}</p>
-        {/* Aplicando renderizado condicional */}
-        {clicks.length === 0 ? (<WarningNotUsed />) : (<ListOfClicks clicks={clicks}/>)}
+        {clicks.length === 0 ? <WarningNotUsed /> : <ListOfClicks clicks={clicks}/>}
       </div>
     )
 }
