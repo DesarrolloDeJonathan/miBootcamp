@@ -9,6 +9,8 @@ const WarningNotUsed = () => {
   return <h1>Todavia no se ha usado el contador</h1>
 }
 const ListOfClicks = ({clicks}) => {
+  //console.log({clicks}); //Añadimos llaves para más detalles
+  //debugger; //Detendra la ejecucuón en este punto
   return <p>{clicks.join(', ')}</p>
 }
 
@@ -20,7 +22,12 @@ const App = (props) => {
   });
 
   const [clicks, setClicks] = useState ([])
-  const handleClickLeft = () => {
+
+  const handleClickLeft = (event) => {
+    //Atrapadndo el evento veremos info como:
+    //Elmentos recividos, teimpo que tardo en hacerlo...
+    console.log(event);
+    // event.preventDefault() // sera importante para los formularios
     const newCountersState = {
       ...counters,
       left: counters.left + 1
@@ -44,7 +51,7 @@ const App = (props) => {
    return (
       <div>
         {counters.left}
-        <button onClick={handleClickLeft}>left</button>
+        <a href="#" onClick={handleClickLeft}>left</a> {/**Evitar usar el anchor, no es buena practica */}
         <button onClick={handleClickRight}>right</button>
         {counters.right}
         <p>Total clicks: {clicks.length}</p>
