@@ -21,21 +21,36 @@ const notes = [
   }
 ]
 
+// mejor tenerlo como componente Note y ademas
+// const Note = ({note}) => {
+//   console.log(note);
+//   return (
+//     <li>
+//       <p>{note.content}</p>
+//       <small><time>{note.date}</time></small>
+//     </li>
+//   )
+// }
+
+// Pasar el minimo de props, los que sean necesarios
+const Note = ({id, content, date}) => {
+  return (
+    <li>
+      <p>{content}</p>
+      <small><time>{date}</time></small>
+    </li>
+  )
+}
+
 export default function App() {
   return (
-    <div>
-      {/* reduciendo sintaxis ya que es solo un return que ahora quedara implicito */}
-      {
-        // Cuando hacemos esta operacion de iterar un lista de elementos
-        notes.map( notes =>
-          // Y renderizar cada elemento, se tiene que indicar cada cosa que se renderiza
-          // en el hijo, en esta caso <div>, tiene que tener un identificador punto es decir único
-          <div key = {notes.id}>
-          <p>{notes.content}</p>
-          <p><time>{notes.date}</time></p>
-          </div>
-        )
-      }
-    </div>
+    <ul>
+      {notes.map( note => (
+        // El key debe ir donde se esta iterando la lista
+        // <Note key={note.id} id={note.id} content={note.content} date={note.date}/>
+        //Y esta línea funciona pero estamos copiando todo y puede que perdamos el control
+        <Note key={note.id} {...note}/>
+      ))}
+    </ul>
   )
 }
