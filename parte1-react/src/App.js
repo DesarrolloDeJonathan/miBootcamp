@@ -2,48 +2,56 @@ import "./styles.css";
 import { useState } from "react";
 import { Note } from "./Note.js";
 
-// let variable = '' //Mala practica, rompre ciclo declarativo de React
-
 export default function App(props) {
   const [notes, setNotes] = useState(props.notes);
-  const [newNote, setNewNote] = useState()
+  const [newNote, setNewNote] = useState("");
+  const [showAll, setShowAll] = useState(true);
 
   const handleChange = (event) => {
-    // console.log({ event });
-    // console.log(event.target.value);
-    // console.log(newNote); para ver cada caracter ingresado
-    setNewNote(event.target.value)
+    setNewNote(event.target.value);
   };
 
-  const handleClick = (event) => {
+  const handleSubmit = (event) => {
+    event.preventDefault(); //evitara que se recarge al enviar input
     console.log("Crear nota");
-    // console.log(newNote); ver el valor completo luego de presionar el boton
-    const noteToAddState = {
+    const noteToAddToState = {
       id: notes.length + 1,
       content: newNote,
       date: new Date().toISOString(),
-      important: Math.random() < 0.5
-    }
-    console.log(noteToAddState);
-    // al ser más legible es mejor empezar con este
-    setNotes(notes.concat(noteToAddState))
-    // setNotes([...notes, noteToAddState]) Esta es mejor al ser extencible y fácil de leer
-    setNewNote("")
+      important: Math.random() < 0.5,
+    };
+    console.log(noteToAddToState);
+
+    // usando una función que recibe como parametro el estado anterior y le pasas el nuevo
+    setNotes((prevNotes) => prevNotes.concat(noteToAddToState));
+    // Esta es mejor al ser extencible y fácil de leer
+    // setNotes([...notes, noteToAddToState]);
+    setNewNote("");
+  };
+
+  const handleShowAll = () => {
+    setShowAll(() => !showAll);
   };
 
   return (
     <div>
       <h1>Notes</h1>
+      <button onClick={handleShowAll}>{showAll ? "Show only important" : "Show All"}</button>
       <ul>
-        {notes.map((note) => (
-          <Note key={note.id} {...note} />
-        ))}
+        {notes
+          .filter((note) => {
+            if (showAll === true) return note;
+            return note.important === true;
+          })
+          .map((note) => (
+            <Note key={note.id} {...note} />
+          ))}
       </ul>
 
-      <div>
+      <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange} />
-        <button onClick={handleClick}>Crear nota</button>
-      </div>
+        <button>Crear nota</button>
+      </form>
     </div>
   );
 }

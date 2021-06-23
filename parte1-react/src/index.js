@@ -1,19 +1,19 @@
 import ReactDOM from "react-dom";
-import "./styles.css";
+// import "./styles.css";
 import App from "./App";
 
 const notes = [
   {
     id: 1,
     content: "HTML is easy",
-    date: "2019-05-30T17:30:31.098Z",
+    date: "2019-03-30T17:30:31.098Z",
     important: true,
-    categories: ["sports", "hobby"],
+    // categories: ["sports", "hobby"],
   },
   {
     id: 2,
     content: "Browser can execute only JavaScript",
-    date: "2019-05-30T18:39:34.091Z",
+    date: "2019-04-30T18:39:34.091Z",
     important: false,
   },
   {
@@ -25,4 +25,6 @@ const notes = [
 ];
 
 //Pasamos la prop
+// const rootElement = document.getElementById("root");
+// ReactDOM.render(<App notes={notes} />, rootElement);
 ReactDOM.render(<App notes={notes} />, document.getElementById("root"));
