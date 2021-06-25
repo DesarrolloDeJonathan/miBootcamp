@@ -1,6 +1,7 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
 import { Note } from "./Note.js";
+import axios from "axios";
 
 export default function App() {
   const [notes, setNotes] = useState([]);
@@ -8,18 +9,14 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log("Estas usando useEffect");
-    console.log("Empieza el conteo");
+    console.log("useEffect");
     setLoading(true);
     setTimeout(() => {
-      console.log("ahora el , y el fetch asyncrino");
-      fetch("https://jsonplaceholder.typicode.com/posts")
-        .then((response) => response.json())
-        .then((json) => {
-          console.log("setea las notas de la API en json");
-          setNotes(json);
-          setLoading(false);
-        });
+      axios.get("https://jsonplaceholder.typicode.com/posts").then((response) => {
+        const { data } = response;
+        setNotes(data);
+        setLoading(false);
+      });
     }, 2000);
   }, [setLoading]);
 
