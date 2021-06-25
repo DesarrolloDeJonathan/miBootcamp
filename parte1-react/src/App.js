@@ -5,10 +5,12 @@ import { Note } from "./Note.js";
 export default function App() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("Estas usando useEffect");
     console.log("Empieza el conteo");
+    setLoading(true);
     setTimeout(() => {
       console.log("ahora el , y el fetch asyncrino");
       fetch("https://jsonplaceholder.typicode.com/posts")
@@ -16,9 +18,10 @@ export default function App() {
         .then((json) => {
           console.log("setea las notas de la API en json");
           setNotes(json);
+          setLoading(false);
         });
     }, 2000);
-  }, []);
+  }, [setLoading]);
 
   const handleChange = (event) => {
     setNewNote(event.target.value);
@@ -39,11 +42,12 @@ export default function App() {
   };
 
   console.log("render");
-  if (notes.length === 0) return "¡Hola Jonathan!";
+  // if (notes.length === 0) return "¡Hola Jonathan!";
 
   return (
     <div>
       <h1>Notes</h1>
+      {loading ? "cargando..." : ""}
       <ol>
         {notes.map((note) => (
           <Note key={note.id} {...note} />
